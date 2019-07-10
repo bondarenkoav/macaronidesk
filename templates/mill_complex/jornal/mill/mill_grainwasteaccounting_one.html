@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if id_item %}{% url 'mill:addget_grainwasteaccounting' id_item %}{% else %}{% url 'mill:addget_grainwasteaccounting' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Дата и время" label_for="Date_word" %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Date_word layout='inline' %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Time_word layout='inline' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Gang layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Выбито" label_for="GrainWaste" %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.GrainWaste layout='horizontal' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.Bran layout='horizontal' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.BranSecondGrade layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Комментарии" label_for="Comment" %}
+                            </div>
+                            <div class="col-10">
+                                {% bootstrap_field form.Comment layout='inline' %}
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'mill:getlist_grainwasteaccounting' %}" role="button">Вернуться к списку</a>
+                        {% if perms.mill_complex.m_gwa_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

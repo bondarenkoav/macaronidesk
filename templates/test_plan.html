@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Агро-Альянс</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="{% static "static/images/icon.png" %}">
+        <link href='{% static "static/css/fullcalendar.min.css" %}' rel='stylesheet' />
+        <link href='{% static "static/css/fullcalendar.print.css" %}' rel='stylesheet' media='print' />
+        <script src="{% static "static/js/jquery.min.js" %}"></script>
+        <script src="{% static "static/js/moment.min.js" %}"></script>
+        <script src='{% static "static/js/fullcalendar.min.js" %}'></script>
+        <script>
+            $(function() {
+                $('#calendar').fullCalendar({
+                    defaultView: 'month',
+    {#                events: 'https://fullcalendar.io/demo-events.json'#}
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="calendar"></div>
+    </body>
+</html>

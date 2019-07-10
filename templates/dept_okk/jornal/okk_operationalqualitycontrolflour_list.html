@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="{% url 'okk:okk_dashboard' %}">ОКК</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.dept_okk.okk_oqcf_item_add %}
+        <a href="{% url 'okk:addget_operationalqualitycontrolflour' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">Дата и время</th>
+                    <th rowspan="2">Сорт муки/№ тонны/Производительность</th>
+                    <th colspan="12">Показатели</th>
+                    <th colspan="4">Вкрапления</th>
+                    <th colspan="2">Коэффициенты</th>
+                    <th rowspan="2">Автор</th>
+                </tr>
+                <tr class="text-center">
+                    <th>Влаж./Инфр.</th>
+                    <th>Ост.</th>
+                    <th>Прох.</th>
+                    <th>Металлопримесь</th>
+                    <th>Хруст</th>
+                    <th>Зараж/загряз</th>
+                    <th>Зол.</th>
+                    <th>Кисл.</th>
+                    <th>Клейк.</th>
+                    <th>ИДК</th>
+                    <th>Клейк./Инфр.</th>
+                    <th>Белок</th>
+                    <th>Чер.</th>
+                    <th>Кор.</th>
+                    <th>Зел.</th>
+                    <th>Пост.</th>
+                    <th>a</th>
+                    <th>b</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'okk:addget_operationalqualitycontrolflour' item.id %}';" class="text-center">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.Date_word|date:"d.m.Y" }} {{ item.Time_word }}</td>
+                        <td>{{ item.FlourGrade }}/{{ item.BatchNumber }}/{{ item.Productivity }}</td>
+
+                        <td>{{ item.MoistureInfratek }}</td>
+                        <td>{{ item.Residue }}</td>
+                        <td>{{ item.Foramen }}</td>
+                        <td>{{ item.MetalImpurity }}</td>
+                        <td>{{ item.Crunch }}</td>
+                        <td>{{ item.Contamination }}</td>
+                        <td>{{ item.AshContent }}</td>
+                        <td>{{ item.Acidity }}</td>
+                        <td>{{ item.Gluten }}</td>
+                        <td>{{ item.IDK }}</td>
+                        <td>{{ item.GlutenInfratek }}</td>
+                        <td>{{ item.Protein }}</td>
+
+                        <td>{{ item.Inclusion_Black }}</td>
+                        <td>{{ item.Inclusion_Brown }}</td>
+                        <td>{{ item.Inclusion_Green }}</td>
+                        <td>{{ item.Inclusion_Extraneous }}</td>
+
+                        <td>{{ item.Factor_a }}</td>
+                        <td>{{ item.Factor_b }}</td>
+
+                        <td>
+                            {% if item.Create_user %}
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name }}
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

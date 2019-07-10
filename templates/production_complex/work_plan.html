@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load alltags %}
+
+{% block include_header %}
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month, agendaWeek, agendaDay, listMonth'
+                },
+                navLinks: true, // can click day/week names to navigate views
+                businessHours: true, // display business hours
+                editable: true,
+                events: [
+                    // Заказы
+                    {% for item in tasks %}
+                    {
+                        {% if item.equipement %}
+                            title: '{{ item.equipement }}: {% if item.product %}{{ item.product }} - {{ item.volume }} кг{% else %}{{ item.status }}{% endif %}',
+                            start: '{{ item.start|date:'Y-m-d' }}',
+                            {% if item.end %}end: '{{ item.end|date:'Y-m-d' }}',{% endif %}
+                            constraint: 'businessHours'
+                        {% endif %}
+                    },
+                    {% endfor %}
+
+                    // Дни простоя оборудования на ремонте или ТО
+                    {% for item in restrictions %}
+                        {
+                            title: '{{ item.equipement }} - {{ item.status|get_namestatus_task }}',
+                            start: '{{ item.start|date:'Y-m-d' }}',
+                            end: '{{ item.end|date:'Y-m-d' }}',
+                            color: '#ff9f89'
+                        },
+                    {% endfor %}
+                ]
+            });
+      });
+    </script>
+{% endblock %}
+
+{% block content_title %}План{% endblock %}
+{% block content_area %}Производственный комплекс{% endblock %}
+{% block content_title_small %}Рабочий стол{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-2 btn-group-vertical" id="tools">
+            <a href="{% url 'pc:add_work_plan' %}" class="btn btn-primary" role="button" aria-disabled="true">Добавить задание</a>
+            <a href="{% url 'pc:add_work_restriction' %}" class="btn btn-primary" role="button" aria-disabled="true">Добавить огран-ие</a>
+        </div>
+        <div class="col-10" id="calendar" style="padding: 10px 30px;"></div>
+    </div>
+
+{% endblock %}

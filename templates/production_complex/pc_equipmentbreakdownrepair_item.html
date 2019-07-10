@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if id_item %}{% url 'pc:addget_equipmentbreakdownrepair' id_item %}{% else %}{% url 'pc:addget_equipmentbreakdownrepair' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='horizontal' %}
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'pc:getlist_equipmentbreakdownrepair' %}" role="button">Вернуться к списку</a>
+                        {% if perms.production_complex.p_ebr_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

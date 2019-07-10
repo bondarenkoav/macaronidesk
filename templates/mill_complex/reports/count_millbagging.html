@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load bootstrap4 mill_complex_tags %}
+
+{% block content_title %}Количество зерна в силосах{% endblock %}
+{% block content_area %}Отчеты{% endblock %}
+{% block content_title_small %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">Дата</th>
+                    <th rowspan="2">Время</th>
+                    <th rowspan="2">Смена</th>
+                    <th colspan="3">Получено, мешков</th>
+                    <th rowspan="2">Создал/Обновил</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="text-center">мука</th>
+                    <th scope="col">зерноотходы</th>
+                    <th scope="col">зеленые мешки</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bagging %}
+                    <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.Date_word }}</td>
+                        <td>{{ item.Time_word }}</td>
+                        <td>{{ item.Gang|getname_gang }}</td>
+                        <td>{{ item.ReceivedBags_flour }}</td>
+                        <td>{{ item.ReceivedBags_zo }}</td>
+                        <td>{{ item.ReceivedBags_zelen }}</td>
+                        <td>
+                            {% if item.Create_user %}
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name }}
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="text-center">
+                    <th colspan="4" class="text-right">Итого</th>
+                    <th>{{ total_ReceivedBags_flour.summ }}</th>
+                    <th>{{ total_ReceivedBags_zo.summ }}</th>
+                    <th>{{ total_ReceivedBags_zelen.summ }}</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}

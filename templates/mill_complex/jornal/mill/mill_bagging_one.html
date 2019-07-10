@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if id_item %}{% url 'mill:addget_bagging' id_item %}{% else %}{% url 'mill:addget_bagging' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Дата и время" label_for="Date_word" %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Date_word layout='inline' %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Time_word layout='inline' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Gang layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Получено, мешков" label_for="ReceivedBags_flour" %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.ReceivedBags_flour layout='inline' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.ReceivedBags_zo layout='inline' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.ReceivedBags_zelen layout='inline' %}
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'mill:getlist_bagging' %}" role="button">Вернуться к списку</a>
+                        {% if perms.mill_complex.m_bag_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

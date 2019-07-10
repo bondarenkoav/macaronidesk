@@ -1,0 +1,11 @@
+{% load bootstrap4 %}
+
+
+<form action="{% url 'change_cur_factory' %}" method="post" class="form">{% csrf_token %}
+    <div class="input-group">
+        {% bootstrap_field form.cur_factory show_label=False form_group_class='change_factory_formgroup' field_class='change_factory_selectfield' size='medium' %}
+        <div class="input-group-append">
+            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn btn-outline-secondary" %}
+        </div>
+    </div>
+</form>

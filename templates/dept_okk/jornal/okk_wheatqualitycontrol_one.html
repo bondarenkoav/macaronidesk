@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if id_item %}{% url 'okk:addget_wheatqualitycontrol' id_item %}{% else %}{% url 'okk:addget_wheatqualitycontrol' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Данные о партии" label_for="Date_word" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Date_word layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Time_word layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Provider layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.CarNumber layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.CerealCrop layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.LotWeight layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Основные параметры зерна" label_for="Grain_Nature" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Grain_Nature layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Grain_Moisture layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Grain_Gluten layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Grain_Vitreous layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Grain_IDK layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Grain_Protein layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Сорная примесь" label_for="DustImpurity_OvsyugKukol" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.DustImpurity_OvsyugKukol layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.DustImpurity_PolovaSeeds layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.DustImpurity_SprigsSeeds layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.DustImpurity_Fug layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.DustImpurity_Minerals layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.DustImpurity_Spoiled layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Зерновая примесь" label_for="GrainImpurity_Beaten" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.GrainImpurity_Beaten layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.GrainImpurity_Eaten layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.GrainImpurity_Rye layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.GrainImpurity_Barley layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.GrainImpurity_Sprouted layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Сорная примесь" label_for="Defect_Small" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Defect_Small layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Defect_Soft layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Defect_Cracks layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Defect_BlackGerm layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'okk:getlist_wheatqualitycontrol' %}" role="button">Вернуться к списку</a>
+                        {% if perms.dept_okk.okk_wqc_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

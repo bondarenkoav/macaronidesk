@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="#">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.mill_complex.m_lw_item_add %}
+        <a href="{% url 'mill:addget_laboratorywork' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="2" scope="col">#</th>
+                    <th rowspan="2" scope="col">Дата и время</th>
+                    <th colspan="5" scope="col">Влажность %</th>
+                    <th colspan="5" scope="col">Высший сорт</th>
+                    <th colspan="2" scope="col">Второй сорт</th>
+                    <th rowspan="2" scope="col">Отруби натура</th>
+                    <th rowspan="2" scope="col">Создал/Обновил</th>
+                </tr>
+                <tr class="text-center">
+                    <th>Отлёжка 1</th>
+                    <th>Отлёжка 2</th>
+                    <th>Отлёжка 3</th>
+                    <th>Высший сорт</th>
+                    <th>Второй сорт</th>
+                    <th>Остаток</th>
+                    <th>Проход</th>
+                    <th>Желтизна</th>
+                    <th>Мет.примесь</th>
+                    <th>Хруст</th>
+                    <th>Остаток</th>
+                    <th>Проход</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'mill:addget_laboratorywork' item.id %}';" class="text-center">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>
+                            {{ item.Date_word|date:"d.m.Y" }} {{ item.Time_word }}<br/>
+                            {% if item.Gang == 'day_shift' %}
+                                Дневная
+                            {% else %}
+                                Ночная
+                            {% endif %}
+                        </td>
+                        <td>{{ item.Postponing_One }}</td>
+                        <td>{{ item.Postponing_Two }}</td>
+                        <td>{{ item.Postponing_Three }}</td>
+                        <td>{{ item.Grade_Top }}</td>
+                        <td>{{ item.Grade_Second }}</td>
+                        <td>{{ item.Remainder_TopGrade }}</td>
+                        <td>{{ item.Passage_TopGrade }}</td>
+                        <td>{{ item.Yellowish_TopGrade }}</td>
+                        <td>{{ item.MetalImpurity_TopGrade }}</td>
+                        <td>{% if item.Crunch_TopGrade == 'thereis' %}да{% else %}нет{% endif %}</td>
+                        <td>{{ item.Remainder_GradeSecond }}</td>
+                        <td>{{ item.Passage_GradeSecond }}</td>
+                        <td>{{ item.Bran_Nature }}</td>
+                        <td>
+                            {% if item.Create_user %}
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name }}
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% include 'templatetags/pagination.html' with page_obj=list %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="#">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.mill_complex.m_cmi_item_add %}
+        <a href="{% url 'mill:addget_controlmagneticinstallations' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Дата и время</th>
+                    <th scope="col">Проверяющий</th>
+                    <th scope="col">Проверку прошли</th>
+                    <th scope="col">Проверку не прошли</th>
+                    <th scope="col">Создал/Обновил</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'mill:addget_controlmagneticinstallations' item.id %}';" class="text-center">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.Date_word|date:"d.m.Y" }} {{ item.Time_word }}</td>
+                        <td>{{ item.Verifier }}</td>
+                        <td>{{ item.CheckPassed }}</td>
+                        <td>{{ item.CheckFailed }}</td>
+                        <td>
+                            {% if item.Create_user %}
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name }}
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% include 'templatetags/pagination.html' with page_obj=list %}
+{% endblock %}

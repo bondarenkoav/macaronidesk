@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="{% url 'rbooks:rb_dashboard' %}">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    <a href="{% url 'rbooks:addget_client' %}">Добавить запись</a>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th style="width: 5%;">#</th>
+                    <th style="width: 10%;">Тип контрагента</th>
+                    <th style="width: 30%;">Краткое наименование/ФИО</th>
+                    <th style="width: 40%;">Полное наименование</th>
+                    <th style="width: 15%;">ИНН</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'rbooks:addget_client' item.id %}';">
+                        <th scope="row" class="text-center">{{ item.id }}</th>
+                        <td>{% if item.type == 'company' %}Организация{% else %}ИП{% endif %}</td>
+                        <td>{{ item.shortname }}</td>
+                        <td>{% if item.type == 'company' %}{{ item.fullname }}{% else %}{% endif %}</td>
+                        <td>{{ item.inn }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

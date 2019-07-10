@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content_title %}Новое задание{% endblock %}
+{% block content_area %}Производственный комплекс{% endblock %}
+{% block content_title_small %}Производственный план{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'pc:add_work_plan' %}" method="post" class="form">
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='horizontal' %}
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'pc:work_plan' %}" role="button">Вернуться к списку</a>
+                        {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load production_complex_tags %}
+
+{% for task in tasks %}
+    {% if task != None %}
+        {% for item in task.all %}
+            {% if item.type_task == 'tasks' %}
+                <td>{{ item.product }}</td>
+                <td>{{ item.volume }}</td>
+            {% else %}
+                <td colspan="2" class="{{ item.status.class_b4_td }}">
+                    {{ item.status }}<br/>
+                    <small>{{ item.status_descript }}</small>
+                </td>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <td></td>
+        <td></td>
+    {% endif %}
+{% endfor %}

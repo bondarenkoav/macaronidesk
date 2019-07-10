@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content_title %}Профиль{% endblock %}
+{% block content_area %}Аккаунт{% endblock %}
+{% block content_title_small %}{{ profile.user.username }}{% endblock %}
+
+{% block content %}
+<body>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Профиль</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#tasks_incoming" role="tab" data-toggle="tab">Входящие</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#tasks_outgoing" role="tab" data-toggle="tab">Исходящие</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="profile">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>ФИО</td>
+                    <td>{{ profile.user.last_name }} {{ profile.user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Пол</td>
+                    <td>{{ profile.gender }}</td>
+                </tr>
+                <tr>
+                    <td>Группа</td>
+                    <td>{{ profile.user.group }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ profile.user.email }}</td>
+                </tr>
+                <tr>
+                    <td>Дата рождения</td>
+                    <td>{{ profile.birthday }}</td>
+                </tr>
+                <tr>
+                    <td>Город проживания</td>
+                    <td>{{ profile.location }}</td>
+                </tr>
+                <tr>
+                    <td>Телефон</td>
+                    <td>{{ profile.phone }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="tasks_incoming">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Задача</th>
+                    <th scope="col">Срок исполнения</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Назначена</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for item in tasks_incoming %}
+                        <tr>
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.title }}<br>
+                                <small>{{ item.description|truncatechars:50 }}</small>
+                            </td>
+                            <td>{{ item.Date_limit }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.author }} {{ DateTime_add }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="tasks_outgoing">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Задача</th>
+                    <th scope="col">Срок исполнения</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Назначена</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for item in tasks_incoming %}
+                        <tr>
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.title }}<br>
+                                <small>{{ item.description|truncatechars:50 }}</small>
+                            </td>
+                            <td>{{ item.Date_limit }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.author }} {{ DateTime_add }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,1 @@
+default_app_config = "production_complex.apps.ProductionComplexConfig"

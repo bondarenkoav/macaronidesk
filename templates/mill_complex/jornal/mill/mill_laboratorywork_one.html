@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if id_item %}{% url 'mill:addget_laboratorywork' id_item %}{% else %}{% url 'mill:addget_laboratorywork' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Дата и время" label_for="Date_word" %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Date_word layout='inline' %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Time_word layout='inline' %}
+                            </div>
+                            <div class="col-6">
+                                {% bootstrap_field form.Gang layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "Влажность" label_for="Postponing_One" %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Postponing_One layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Postponing_Two layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Postponing_Three layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Grade_Top layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Grade_Second layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "Высший сорт" label_for="Remainder_TopGrade" %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Remainder_TopGrade layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Passage_TopGrade layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Yellowish_TopGrade layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.MetalImpurity_TopGrade layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Crunch_TopGrade layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "Цвет" label_for="GrainBlack" %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.GrainBlack layout='horizontal' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.GrainBraun layout='horizontal' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.GrainGreen layout='horizontal' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.GrainWhite layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "2ой сорт" label_for="Remainder_GradeSecond" %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.Remainder_GradeSecond layout='horizontal' %}
+                            </div>
+                            <div class="col-3">
+                                {% bootstrap_field form.Passage_GradeSecond layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Отруби натура, г/л" label_for="Bran_Nature" %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Bran_Nature layout='inline' %}
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'mill:getlist_laboratorywork' %}" role="button">Вернуться к списку</a>
+                        {% if perms.mill_complex.m_lw_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

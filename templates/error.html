@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content_title %}Ошибка{% endblock %}
+{% block content_area %}Начало{% endblock %}
+{% block content_title_small %}Рабочий стол{% endblock %}
+
+{% block content %}
+    <div class="accountbg"></div>
+        <div class="wrapper-page">
+
+            <div class="card">
+                <div class="card-block">
+
+                    <div class="ex-page-content text-center">
+                        <h1 class="">{{ error_type }}</h1>
+                        <h3 class="">{{ error_description }}</h3><br>
+
+                        <a class="btn btn-info mb-5 waves-effect waves-light" href="{% url 'dashboard' %}">Вернутся в Панель управления</a>
+                        <a class="btn btn-info mb-5 waves-effect waves-danger" href="{% url 'logout' %}">Выйти из программы</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+{% endblock %}

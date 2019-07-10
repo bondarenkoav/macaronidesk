@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                {% bootstrap_form_errors form layout='horizontal' %}
+                <form action="{% if id_item %}{% url 'okk:addget_controlgrainmoisture' id_item %}{% else %}{% url 'okk:addget_controlgrainmoisture' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Данные о партии" label_for="Date_word" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Date_word layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Time_word layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Отлёжка, %" label_for="Moisture_excuse1" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Moisture_excuse1 layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Moisture_excuse2 layout='horizontal' %}
+                                    </div>
+                                    <div class="col-4">
+                                        {% bootstrap_field form.Moisture_excuse3 layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'okk:getlist_controlgrainmoisture' %}" role="button">Вернуться к списку</a>
+                        {% if perms.dept_okk.okk_cgm_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

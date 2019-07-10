@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load bootstrap4 mill_complex_tags %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="#">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.mill_complex.m_tech_item_add %}
+        <a href="{% url 'mill:addget_technological' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="2" scope="col">#</th>
+                    <th rowspan="2" scope="col">Дата и время</th>
+                    <th rowspan="2" scope="col">Смена</th>
+                    <th colspan="6" scope="col">Произведено продукции, кг</th>
+                    <th colspan="3" scope="col">Выбито в мешки, кг</th>
+                    <th rowspan="2" scope="col">Перекачено в цех счетчик</th>
+                    <th colspan="{{ data_bhm.count }}" scope="col">Показание муки в БХМ, в %</th>
+                    <th rowspan="2" scope="col">Создал/Обновил</th>
+                </tr>
+                <tr class="text-center">
+                    <th>Манка</th>
+                    <th>ВС счетчик (весы)</th>
+                    <th>2С счетчик (весы)</th>
+                    <th>Отруби счетчик (весы)</th>
+                    <th>Зерноотходы</th>
+                    <th>Отруби 2С</th>
+                    <th>ВС, поддонов</th>
+                    <th>2С, поддонов</th>
+                    <th>Манка</th>
+                    {% for item in data_bhm %}
+                        <th>{{ item.name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'mill:addget_technological' item.id %}';" class="text-center">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.Date_word|date:"d.m.Y" }} {{ item.Time_word }}</td>
+                        <td>
+                            {% if item.Gang == 'day_shift' %}
+                                Дневная
+                            {% else %}
+                                Ночная
+                            {% endif %}
+                        </td>
+                        <td>{{ item.Prod_Semolina }}</td>
+                        <td>{{ item.Prod_TopGrade_enum }}</td>
+                        <td>{{ item.Prod_SecondGrade_enum }}</td>
+                        <td>{{ item.Prod_Bran_enum }}</td>
+                        <td>{{ item.Prod_GrainWaste }}</td>
+                        <td>{{ item.Prod_Bran2Varieties }}</td>
+                        <td>{{ item.KnockedOut_TopGrade }}</td>
+                        <td>{{ item.KnockedOut_SecondGrade }}</td>
+                        <td>{{ item.KnockedOut_Semolina }}</td>
+                        <td>{{ item.Trans_Workshop }}</td>
+                        {% for bhm in data_bhm %}
+                            <td>{{ item.id|get_bhm:bhm.id }}</td>
+                        {% endfor %}
+                        <td>
+                            {% if item.Create_user %}
+                                <small><i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name|truncatechars:6 }}</small>
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <small><i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name|truncatechars:6 }}</small>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% include 'templatetags/pagination.html' with page_obj=list %}
+{% endblock %}

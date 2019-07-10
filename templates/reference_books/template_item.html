@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content_title %}{% if id_item %}№{{ id_item }}{% else %}Новая запись{% endif %}{% endblock %}
+{% block content_area %}
+    <a href="">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    {{ title_small }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% bootstrap_form_errors form %}
+        <form action="{% if id_item %}{% url url_addget id_item %}{% else %}{% url url_addget %}{% endif %}" method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            {% buttons %}
+                <a class="btn btn-warning" href="{% url url_getlist %}" role="button">Вернуться к списку</a>
+                {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}

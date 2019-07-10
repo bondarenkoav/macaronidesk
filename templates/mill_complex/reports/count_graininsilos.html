@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content_title %}Количество зерна в силосах{% endblock %}
+{% block content_area %}Отчеты{% endblock %}
+{% block content_title_small %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" href="#moment" role="tab" data-toggle="tab">В настоящее время</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#range_date" role="tab" data-toggle="tab">За период</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#clients" role="tab" data-toggle="tab">По контрагентам</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="moment">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Силос 1</h5>
+                        <h3 class="card-subtitle mb-2 text-muted">{{ silos.Sil_1 }} тонн</h3>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Силос 2</h5>
+                        <h3 class="card-subtitle mb-2 text-muted">{{ silos.Sil_2 }} тонн</h3>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Силос 3</h5>
+                        <h3 class="card-subtitle mb-2 text-muted">{{ silos.Sil_3 }} тонн</h3>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="range_date">
+
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="clients">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

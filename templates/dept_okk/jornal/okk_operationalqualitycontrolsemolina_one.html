@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                {% bootstrap_form_errors form layout='horizontal' %}
+                <form action="{% if id_item %}{% url 'okk:addget_operationalqualitycontrolsemolina' id_item %}{% else %}{% url 'okk:addget_operationalqualitycontrolsemolina' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Дата и время" label_for="Date_word" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-3">
+                                        {% bootstrap_field form.Date_word layout='inline' %}
+                                    </div>
+                                    <div class="col-3">
+                                        {% bootstrap_field form.Time_word layout='inline' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.BatchNumber layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Параметры" label_for="FlourGrade" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Productivity layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Moisture layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Foramen layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.MetalImpurity layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Crunch layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Contamination layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.AshContent layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Вкрапления, %" label_for="Inclusion_Black" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Inclusion_Black layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Inclusion_Brown layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Inclusion_Green layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Inclusion_Extraneous layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Коэффициенты" label_for="Factor_a" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Factor_a layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Factor_b layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'okk:getlist_operationalqualitycontrolsemolina' %}" role="button">Вернуться к списку</a>
+                        {% if perms.dept_okk.okk_oqcs_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

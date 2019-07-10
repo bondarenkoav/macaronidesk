@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="{% url 'rbooks:rb_dashboard' %}">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    <a href="{% url 'rbooks:addget_product' %}">Добавить запись</a>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th style="width: 5%;">#</th>
+                    <th style="width: 95%;">Наименование</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'rbooks:addget_product' item.id %}';">
+                        <th scope="row" class="text-center">{{ item.id }}</th>
+                        <td>{{ item.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

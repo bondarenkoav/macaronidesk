@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="#">{{ title_area }}</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.production_complex.p_ebr_item_add %}
+        <a href="{% url 'pc:addget_equipmentbreakdownrepair' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Дата и время</th>
+                    <th scope="col">Смена</th>
+                    <th scope="col">Исполнители</th>
+                    <th scope="col">Событие</th>
+                    <th scope="col">Действия</th>
+                    <th scope="col">Создано/Обновлено</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'pc:addget_equipmentbreakdownrepair' item.id %}';" class="text-center">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.DateTime }}</td>
+                        <td>{{ item.Gang }}</td>
+                        <td>
+                            {% for cowork in item.Coworker %}
+                                {% if forloop.first %}
+                                    {{ cowork.fullname }}
+                                {% else %}
+                                    , {{ cowork.fullname }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ item.Event }}</td>
+                        <td>{{ item.Action }}</td>
+                        <td>
+                            <i class="fa fa-plus" aria-hidden="true"></i> {{ item.okk_cgm_creator.last_name }}
+                            <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.okk_cgm_modifying.last_name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% include 'templatetags/pagination.html' with page_obj=list %}
+{% endblock %}

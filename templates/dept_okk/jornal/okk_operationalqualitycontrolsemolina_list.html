@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="{% url 'okk:okk_dashboard' %}">ОКК</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.dept_okk.okk_oqcs_item_add %}
+        <a href="{% url 'okk:addget_operationalqualitycontrolsemolina' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">Дата и время</th>
+                    <th colspan="3">Параметры</th>
+                    <th colspan="4">Вкрапления</th>
+                    <th colspan="2">Коэффициенты</th>
+                    <th colspan="3">Брак</th>
+                    <th rowspan="2">Автор</th>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col">Влажность</th>
+                    <th scope="col">Проход</th>
+                    <th scope="col">Металлопримесь</th>
+
+                    <th scope="col">черные</th>
+                    <th scope="col">коричневые</th>
+                    <th scope="col">зеленые</th>
+                    <th scope="col">посторонние</th>
+
+                    <th scope="col">a</th>
+                    <th scope="col">b</th>
+
+                    <th scope="col">Хруст</th>
+                    <th scope="col">Зараженность</th>
+                    <th scope="col">Зольность</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'okk:addget_operationalqualitycontrolsemolina' item.id %}';" class="text-center">
+                        <td scope="row">{{ item.id }}</td>
+                        <td>{{ item.Date_word|date:"d.m.Y" }} {{ item.Time_word }}<br/>тонна №{{ item.BatchNumber }}<br/>производ. - {{ item.Productivity }}</td>
+
+                        <td>{{ item.Moisture }}</td>
+                        <td>{{ item.Foramen }}</td>
+                        <td>{{ item.MetalImpurity }}</td>
+
+                        <td>{{ item.Inclusion_Black }}</td>
+                        <td>{{ item.Inclusion_Brown }}</td>
+                        <td>{{ item.Inclusion_Green }}</td>
+                        <td>{{ item.Inclusion_Extraneous }}</td>
+
+                        <td>{{ item.Factor_a }}</td>
+                        <td>{{ item.Factor_b }}</td>
+
+                        <td>{{ item.Crunch }}</td>
+                        <td>{{ item.Contamination }}</td>
+                        <td>{{ item.AshContent }}</td>
+                        <td>
+                            {% if item.Create_user %}
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name }}
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

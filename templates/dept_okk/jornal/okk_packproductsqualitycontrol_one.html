@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                {% bootstrap_form_errors form layout='horizontal' %}
+                <form action="{% if id_item %}{% url 'okk:addget_packproductsqualitycontrol' id_item %}{% else %}{% url 'okk:addget_packproductsqualitycontrol' %}{% endif %}" method="post" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Дата и время" label_for="Date_word" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-3">
+                                        {% bootstrap_field form.Date_word layout='inline' %}
+                                    </div>
+                                    <div class="col-3">
+                                        {% bootstrap_field form.Time_word layout='inline' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.BatchNumber layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Вид изделия" label_for="Moisture" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Product layout='inline' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Качественные показатели" label_for="Moisture" %}
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Moisture layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.DeviationFromAverageLength layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Crumb layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Deformation layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Split layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.Cut layout='horizontal' %}
+                                    </div>
+                                    <div class="col-5">
+                                        {% bootstrap_field form.ImpregnationTrace layout='horizontal' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'okk:getlist_packproductsqualitycontrol' %}" role="button">Вернуться к списку</a>
+                        {% if perms.dept_okk.okk_pqc_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

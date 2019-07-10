@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block filters_form %}
+    <i class="fa fa-filter disabled"></i>
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if id_item %}{% url 'mill:addget_technological' id_item %}{% else %}{% url 'mill:addget_technological' %}{% endif %}" method="post" class="form">
+                    {% bootstrap_form_errors form layout='inline' %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-1">
+                                {% bootstrap_label "Дата и время" label_for="Date_word" %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Date_word layout='inline' %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.Time_word layout='inline' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Gang layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "Произведено продукции, кг" label_for="Prod_Semolina" %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Prod_Semolina layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Prod_TopGrade_enum layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Prod_SecondGrade_enum layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Prod_Bran_enum layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Prod_GrainWaste layout='horizontal' %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.Prod_Bran2Varieties layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "Выбито в мешки, кг" label_for="KnockedOut_TopGrade_start" %}
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4">
+                                        {% bootstrap_label "Высший сорт № поддона" label_for="KnockedOut_TopGrade_start" %}
+                                    </div>
+                                    <div class="col-1 text-right">от </div>
+                                    <div class="col-3">{% bootstrap_field form.KnockedOut_TopGrade_start layout='inline' %}</div>
+                                    <div class="col-1 text-right">до </div>
+                                    <div class="col-3">{% bootstrap_field form.KnockedOut_TopGrade_stop layout='inline' %}</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                {% bootstrap_field form.KnockedOut_SecondGrade layout='horizontal' %}
+                            </div>
+                            <div class="col-6">
+                                {% bootstrap_field form.KnockedOut_Semolina layout='horizontal' %}
+                            </div>
+                            <div class="col-6">
+                                {% bootstrap_field form.Trans_Workshop layout='horizontal' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                {% bootstrap_label "Показания муки в БХМ, в %" label_for="Remainder_GradeSecond" %}
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    {{ formset.management_form }}
+                                    {% for form in formset %}
+                                        {% bootstrap_form_errors form %}
+                                        <div class="col-3">{% bootstrap_form form layout='horizontal' %}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Произведенные работы во время смены (Описание)" label_for="Description_work" %}
+                            </div>
+                            <div class="col-10">
+                                {% bootstrap_field form.Description_work layout='inline' %}
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'mill:getlist_technological' %}" role="button">Вернуться к списку</a>
+                        {% if perms.mill_complex.m_tech_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

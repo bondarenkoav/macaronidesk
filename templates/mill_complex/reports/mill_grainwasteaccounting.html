@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load bootstrap4 mill_complex_tags %}
+
+{% block content_title %}Учёт зерноотходов и отрубей{% endblock %}
+{% block content_area %}Мельница{% endblock %}
+{% block content_title_small %}Отчет{% endblock %}
+
+{% block content %}
+    <div class="d-none d-sm-block d-print-none">
+        <form action="{% url 'report_mill_grainwasteaccounting' %}" method="post" class="form-inline">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            {% bootstrap_button "Показать" button_type="submit" button_class="btn-primary" %}
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="2">Дата</th>
+                    <th colspan="6">Произведено</th>
+                    <th colspan="3">Продано со склада мельницы</th>
+                </tr>
+                <tr class="text-center">
+                    <th style="width: 10%;">Зерноотходы</th>
+                    <th style="width: 10%;">Зерноотходы 1С</th>
+                    <th style="width: 10%;">Зерноотходы 2С</th>
+                    <th style="width: 10%;">Отруби</th>
+                    <th style="width: 10%;">Отруби 2С</th>
+                    <th style="width: 10%;">мех.потери</th>
+                    <th style="width: 10%;">Отруби</th>
+                    <th style="width: 10%;">Отруби 2С</th>
+                    <th style="width: 10%;">Зерноотходы</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date in list_date %}
+                    <tr class="text-center">
+                        <td>{{ date|date:"d.m.Y" }}</td>
+                        {% get_elevator_grainwaste date %}
+                        {% get_mill_grainwaste date %}
+                        <td>{% get_sold_stock date %}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="text-center">
+                    <th>Итого</th>
+                    <th>{{ total_mill_egwa_grainwaste }}</th>
+                    <th>{{ total_mill_egwa_grainwaste_firstgrade }}</th>
+                    <th>{{ total_mill_egwa_grainwaste_secondgrade }}</th>
+                    <th>{{ total_mill_gwa_bran }}</th>
+                    <th>{{ total_mill_gwa_secondbran }}</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr class="text-center">
+                    <th>Остатки</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}

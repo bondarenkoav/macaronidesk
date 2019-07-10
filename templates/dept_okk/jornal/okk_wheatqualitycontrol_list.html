@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=list_filter.form %}
+{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}
+    <a href="{% url 'okk:okk_dashboard' %}">ОКК</a>
+{% endblock %}
+{% block content_title_small %}
+    {% if perms.dept_okk.okk_wqc_item_add %}
+        <a href="{% url 'okk:addget_wheatqualitycontrol' %}">Добавить запись</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Доставлено</th>
+                    <th scope="col">Поставщик</th>
+                    <th scope="col">Госномер</th>
+                    <th scope="col">Культура</th>
+                    <th scope="col">Вес</th>
+                    <th scope="col">Автор</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'okk:getlist_wheatqualitycontrol' item.id %}';">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.Date_word|date:"d.m.Y" }} {{ item.Time_word }}</td>
+                        <td>{{ item.Provider.shortname }}</td>
+                        <td>{{ item.CarNumber }}</td>
+                        <td>{{ item.CerealCrop.name }}</td>
+                        <td>{{ item.LotWeight }}</td>
+                        <td>
+                            {% if item.Create_user %}
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{ item.Create_user.last_name }}
+                            {% endif %}
+                            {% if item.Update_user %}<br/>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> {{ item.Update_user.last_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
