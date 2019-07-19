@@ -65,12 +65,12 @@ class okk_wheat_quality_control(models.Model):  # входной контрол�
             ('okk_wqc_item_edit', u'ВККП. Редактирование записи'),
         )
 
-class okkwheatqualitycontrol_filter(django_filters.FilterSet):
-    Date_word = django_filters.DateRangeFilter(label=u'Дата записи')
-
-    class Meta:
-        model = okk_wheat_quality_control
-        fields = ['Provider', 'Date_word']
+# class okkwheatqualitycontrol_filter(django_filters.FilterSet):
+#     Date_word = django_filters.DateRangeFilter(label=u'Дата записи')
+#
+#     class Meta:
+#         model = okk_wheat_quality_control
+#         fields = ['Provider', 'Date_word']
 
 
 TYPE_FLOUR_GRADE =  (

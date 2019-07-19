@@ -33,7 +33,10 @@
                         </td>
                         <td class="text-center">{{ item.executors }}</td>
                         <td class="text-center">{{ item.Date_limit }}</td>
-                        <td class="text-center">{{ item.status }}</td>
+                        <td class="text-center">
+                            {{ item.status }}<br/>
+                            <small>{% if item.read == True %}Прочитано{% else %}Не прочитано{% endif %}</small>
+                        </td>
                         <td class="text-center">{{ item.author|view_shortfio_user }} <br/><small>{{ item.DateTime_add }}</small></td>
                     </tr>
                 {% endfor %}

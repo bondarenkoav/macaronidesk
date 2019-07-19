@@ -23,7 +23,7 @@ class Profile(models.Model):
     factory_current = models.ForeignKey(Factory, related_name='factory_current', verbose_name= u'Производство (текущая)', null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.last_name+' '+self.user.first_name
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):

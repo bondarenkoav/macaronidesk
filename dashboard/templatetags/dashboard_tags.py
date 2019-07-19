@@ -1,3 +1,6 @@
+from django.db.models import Q
+from account.views import get_cur_factory
+from reference_books.models import status_task
 from tasks.models import user_task
 from dashboard.models import menu
 from django import template
@@ -17,9 +20,10 @@ def tag_topbar(user):
 
 @register.inclusion_tag('templatetags/notify.html')
 def notify_topbar(user):
-    new_tasks = user_task.objects.none()
-    if not user.is_superuser:
-        new_tasks = user_task.objects.filter(executors__in=user.groups.all(), read=False)
+    new_tasks = user_task.objects.filter(Factory=get_cur_factory(user),
+                                         executors__in=user.groups.all(),
+                                         status__in=status_task.objects.exclude(slug__in=['complete','canceled']),
+                                         read=False)
     return {'new_tasks': new_tasks}
 
 @register.inclusion_tag('templatetags/change_factory.html')

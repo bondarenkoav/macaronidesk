@@ -184,8 +184,8 @@ class product_work_plan(models.Model):
             ('p_wp_item_edit', u'ПрП. Редактирование записи'),
         )
 
-class productworkplan_filter(django_filters.FilterSet):
-
-    class Meta:
-        model = product_work_plan
-        fields = ['type_task', 'equipement', 'product']
+# class productworkplan_filter(django_filters.FilterSet):
+#
+#     class Meta:
+#         model = product_work_plan
+#         fields = ['type_task', 'equipement', 'product']

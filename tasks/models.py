@@ -2,6 +2,7 @@
 import django_filters
 from django.contrib.auth.models import User, Group
 from django.db import models
+from account.models import Profile
 from reference_books.models import status_task, typenotification_task, Factory
 
 
@@ -39,7 +40,11 @@ class user_task(models.Model):
             ('task_item_edit', u'Задачи. Редактирование записи'),
         )
 
-class tasks_filter(django_filters.FilterSet):
+class usertask_filter(django_filters.FilterSet):
+    author      = django_filters.ModelChoiceFilter(queryset=Profile.objects.order_by('user__last_name'))
+    executors   = django_filters.ModelChoiceFilter(queryset=Group.objects.order_by('name'))
+    status      = django_filters.ModelChoiceFilter(queryset=status_task.objects.order_by('name'))
+
     class Meta:
         model = user_task
-        fields = ['executors', 'author', 'status', 'high_importance']
+        fields = ['author', 'executors', 'status']

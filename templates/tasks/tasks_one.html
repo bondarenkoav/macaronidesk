@@ -13,7 +13,7 @@
     <div class="wrapper-page">
         <div class="card">
             <div class="card-body">
-                <form action="{% if id_item %}{% url 'addget_tasks' id_item %}{% else %}{% url 'addget_tasks' %}{% endif %}" method="post" class="form">
+                <form action="{% if data_task %}{% url 'addget_tasks' data_task.id %}{% else %}{% url 'addget_tasks' %}{% endif %}" method="post" class="form">
                     {% bootstrap_form_errors form %}
                     {% csrf_token %}
                     <div class="form-group">
@@ -27,9 +27,9 @@
                             <div class="col-3">
                                 {% bootstrap_field form.high_importance layout='horizontal' error_css_class='invalid-feedback' %}
                             </div>
-                            <div class="col-2">
+                            {% comment %}<div class="col-2">
                                 {% bootstrap_field form.read layout='horizontal' error_css_class='invalid-feedback' %}
-                            </div>
+                            </div>{% endcomment %}
                         </div>
                     </div>
                     <div class="form-group">
@@ -73,13 +73,9 @@
                             <div class="col-4">
                                 {% bootstrap_field form.status layout='inline' error_css_class='invalid-feedback' %}
                             </div>
-                            <div class="col-6">
-                                {% if data_task.status.slug != 'complete' %}
-                                    {% bootstrap_field form.notification layout='horizontal' error_css_class='invalid-feedback' %}
-                                {% else %}
-                                    {% bootstrap_field form.confirmation layout='horizontal' error_css_class='invalid-feedback' %}
-                                {% endif %}
-                            </div>
+{% comment %}                            <div class="col-4">
+                                {% bootstrap_field form.notification layout='horizontal' error_css_class='invalid-feedback' %}
+                            </div>{% endcomment %}
                         </div>
                     </div>
                     <div class="form-group">

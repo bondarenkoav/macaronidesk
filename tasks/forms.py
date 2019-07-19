@@ -1,6 +1,5 @@
 from datetime import datetime
 from django import forms
-from django.contrib.auth.models import Group
 from django.forms import DateInput, TimeInput, TimeField, DateField, ModelForm, CharField
 from reference_books.models import status_task, typenotification_task
 
@@ -27,23 +26,23 @@ class form_add_task(ModelForm):
                 self.fields['Time_limit'].widget.attrs['disabled'] = 'disabled'
                 self.fields['high_importance'].required = False
                 self.fields['high_importance'].widget.attrs['disabled'] = 'disabled'
-                self.fields['notification'].required = False
-                self.fields['notification'].widget.attrs['disabled'] = 'disabled'
                 self.fields['confirmation'].required = False
                 self.fields['confirmation'].widget.attrs['disabled'] = 'disabled'
+                self.fields['status'].queryset = status_task.objects.exclude(slug__in=['confirmation','control','canceled'])
             else:
-                if instance.status == status_task.objects.exclude(slug='complete'):
-                    self.fields['notification'].required = False
-                    self.fields['notification'].widget.attrs['disabled'] = 'disabled'
+                if instance.status.slug == 'open' or instance.status.slug == 'work':
+                    self.fields['status'].queryset = status_task.objects.filter(slug__in=['canceled'])
+                elif instance.status.slug == 'control':
+                    self.fields['status'].queryset = status_task.objects.filter(slug__in=['confirmation','canceled'])
+                else:
+                    self.fields['status'].required = False
+                    self.fields['status'].widget.attrs['disabled'] = 'disabled'
         else:
-            self.fields['notification'].inintial = typenotification_task.objects.get(slug='system')
             self.fields['status'].initial = status_task.objects.get(slug='open')
             self.fields['status'].required = False
             self.fields['status'].widget.attrs['disabled'] = 'disabled'
             self.fields['work_desc'].required = False
             self.fields['work_desc'].widget.attrs['disabled'] = 'disabled'
-            self.fields['notification'].required = False
-            self.fields['notification'].widget.attrs['disabled'] = 'disabled'
 
         self.fields['read'].required = False
         self.fields['read'].widget.attrs['disabled'] = 'disabled'
@@ -60,6 +59,6 @@ class form_add_task(ModelForm):
     class Meta:
         model = user_task
         fields = ['title', 'description', 'executors', 'Date_limit', 'Time_limit',
-                  'high_importance', 'notification', 'status', 'work_desc', 'read', 'confirmation']
+                  'high_importance', 'status', 'work_desc', 'read', 'confirmation']
 
 

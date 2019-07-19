@@ -13,22 +13,24 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os, psycopg2
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$$+r=u3_@ai_rxy)3vl-w!4a0@+&*#-xcwx67*v3-)fo6nv&dw'
-SESSION_COOKIE_AGE = 14400
+SECRET_KEY = 'a3w#qvsa_sxtwg6426h^o$3!h)v$irn_)-zuv7-(y3+11lv)6d'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 TEMPLATE_DIRS = (
-    'C:/djangoproject/macaronidesk/templates',
+    'C:\djangoproject/macaronidesk/templates',
 )
+
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap4','mptt','schedule','django_filters','ckeditor',
+    'bootstrap4','mptt','django_filters','ckeditor',
     'account','dashboard','reference_books',
     'dept_okk','production_complex','mill_complex','tasks'
 ]
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'macaronidesk.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,20 +80,13 @@ WSGI_APPLICATION = 'macaronidesk.wsgi.application'
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'macarondb',
-       'USER': 'request',
-       'PASSWORD': '123456',
-       'HOST': '192.168.0.248', # Set to empty string for localhost.
-       'PORT': '5432', # Set to empty string for default.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'macarondb',
+        'USER': 'request',
+        'PASSWORD': '123456',
+        'HOST': '192.168.0.248', # Set to empty string for localhost.
+        'PORT': '5432', # Set to empty string for default.
     },
-    'OPTIONS': {
-       'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
-    },
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
 }
 
 
@@ -113,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -125,10 +121,26 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, 'static'),
+]
+
+# ManifestStaticFilesStorage is recommended in production, to prevent outdated
+# Javascript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
+# See https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#manifeststaticfilesstorage
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    ('static','C:/djangoproject/macaronidesk/static'),
-)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 BOOTSTRAP4 = {
     "css_url": {
