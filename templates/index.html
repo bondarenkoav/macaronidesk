@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block filters_form %}
-    <i class="fa fa-filter disabled"></i>
-{% endblock %}
-
 {% block content_title %}Рабочий стол{% endblock %}
 {% block content_area %}Начало{% endblock %}
 {% block content_title_small %}Рабочий стол{% endblock %}
@@ -12,53 +8,68 @@
 {% block content %}
     <div class="main-content-inner">
         <div class="row">
-            <!-- seo fact area start -->
-{% comment %}            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-md-6 mt-5 mb-3">
-                        <div class="card">
-                            <div class="seo-fact sbg1">
-                                <div class="p-4 d-flex justify-content-between align-items-center">
-                                    <div class="seofct-icon"><i class="ti-thumb-up"></i> Likes</div>
-                                    <h2>2,315</h2>
-                                </div>
-                                <canvas id="seolinechart1" height="50"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mt-md-5 mb-3">
-                        <div class="card">
-                            <div class="seo-fact sbg2">
-                                <div class="p-4 d-flex justify-content-between align-items-center">
-                                    <div class="seofct-icon"><i class="ti-share"></i> Share</div>
-                                    <h2>3,984</h2>
-                                </div>
-                                <canvas id="seolinechart2" height="50"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3 mb-lg-0">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mt-2 mb-2">
                         <div class="card">
                             <div class="seo-fact sbg3">
                                 <div class="p-4 d-flex justify-content-between align-items-center">
-                                    <div class="seofct-icon">Impressions</div>
-                                    <canvas id="seolinechart3" height="60"></canvas>
+                                    <div class="seofct-icon">
+										<i style="color: #ffffff" class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i> Производство макарон
+									</div>
+                                    <h2>
+                                        <a href="https://docs.google.com/spreadsheets/d/1w1W13-O_YK0KR-UHc5_Tw1MLCZcUTFOySG0u9qoueKI/edit#gid=1369112161">
+                                            <i style="color: #ffffff" class="fa fa-share fa-2x" aria-hidden="true"></i>
+                                        </a>
+                                    </h2>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mt-2 mb-2">
                         <div class="card">
-                            <div class="seo-fact sbg4">
+                            <div class="seo-fact sbg1">
                                 <div class="p-4 d-flex justify-content-between align-items-center">
-                                    <div class="seofct-icon">New Users</div>
-                                    <canvas id="seolinechart4" height="60"></canvas>
+                                    <div class="seofct-icon">Мельничный комплекс</div>
+                                    <h2>
+                                        <a href="{% url 'mill:mill_dashboard' %}">
+                                            <i style="color: #ffffff" class="fa fa-share fa-2x" aria-hidden="true"></i>
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mt-md-2 mb-2">
+                        <div class="card">
+                            <div class="seo-fact sbg2">
+                                <div class="p-4 d-flex justify-content-between align-items-center">
+                                    <div class="seofct-icon">Производственный комплекс</div>
+                                    <h2>
+                                        <a href="{% url 'pc:pc_dashboard' %}">
+                                            <i style="color: #ffffff" class="fa fa-share fa-2x" aria-hidden="true"></i>
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mt-2 mb-2">
+                        <div class="card">
+                            <div class="seo-fact sbg3">
+                                <div class="p-4 d-flex justify-content-between align-items-center">
+                                    <div class="seofct-icon">Отдел контроля качества</div>
+                                    <h2>
+                                        <a href="{% url 'okk:okk_dashboard' %}">
+                                            <i style="color: #ffffff" class="fa fa-share fa-2x" aria-hidden="true"></i>
+                                        </a>
+                                    </h2>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>{% endcomment %}
+            </div>
         </div>
     </div>
 {% endblock %}

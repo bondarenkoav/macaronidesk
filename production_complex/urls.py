@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'work_plan/add_restriction/$', add_work_restriction, name='add_work_restriction'),
     url(r'work_plan/add_plan/$', add_work_plan, name='add_work_plan'),
     url(r'work_plan/$', work_plan, name='work_plan'),
+
     url(r'^', pc_index, name='pc_dashboard'),
 ]

@@ -43,8 +43,9 @@ class user_task(models.Model):
 class usertask_filter(django_filters.FilterSet):
     author      = django_filters.ModelChoiceFilter(queryset=Profile.objects.order_by('user__last_name'))
     executors   = django_filters.ModelChoiceFilter(queryset=Group.objects.order_by('name'))
-    status      = django_filters.ModelChoiceFilter(queryset=status_task.objects.order_by('name'))
-
+    status      = django_filters.ModelChoiceFilter(queryset=status_task.objects.
+                                                   exclude(slug__in=['confirmation','control','canceled']).
+                                                   order_by('id'))
     class Meta:
         model = user_task
-        fields = ['author', 'executors', 'status']
+        fields = ['status','author','executors']

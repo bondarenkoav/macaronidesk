@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'macarondb',
         'USER': 'request',
         'PASSWORD': '123456',
-        'HOST': '192.168.0.248', # Set to empty string for localhost.
+        'HOST': '192.168.41.233', # Set to empty string for localhost.
         'PORT': '5432', # Set to empty string for default.
     },
 }

@@ -20,10 +20,10 @@ jornal_title_small = u'Журнал'
 
 @login_required
 def mill_index(request):
-    cat = menu.objects.get(slug='mill')
-    link = cat.get_ancestors()
+    cat = menu.objects.get(slug='mill_complex')
+    list_child = cat.get_children()
     return render(request, 'mill_complex/mill.html', {
-        'list_links': link,
+        'list_child': list_child,
         'content_title': mill_title_area,
         'content_area': content_area,
         'content_title_small': u'Меню',

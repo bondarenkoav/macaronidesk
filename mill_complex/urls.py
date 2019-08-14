@@ -53,5 +53,5 @@ urlpatterns = [
     url(r'^storageflouraccounting/$', getlist_mill_storageflouraccounting,
         name='getlist_storageflouraccounting'),
 
-    url(r'', mill_index, name='mill_dashboard'),
+    url(r'^', mill_index, name='mill_dashboard'),
 ]

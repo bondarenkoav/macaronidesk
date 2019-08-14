@@ -34,8 +34,22 @@
                         <td class="text-center">{{ item.executors }}</td>
                         <td class="text-center">{{ item.Date_limit }}</td>
                         <td class="text-center">
-                            {{ item.status }}<br/>
-                            <small>{% if item.read == True %}Прочитано{% else %}Не прочитано{% endif %}</small>
+                            {{ item.status }}&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-envelope{% if item.read == True %}-open{% endif %}-o" aria-hidden="true"></i><br/>
+                            <small>
+                                {% if item.status.slug == 'complete' %}
+                                    Задача выполнена исполнителем и требует подтверждения автором
+                                {% elif item.status.slug == 'work' %}
+                                    Задача принята исполнителем
+                                {% elif item.status.slug == 'canceled' %}
+                                    Задача отменена автором
+                                {% elif item.status.slug == 'control' %}
+                                    Выполненая задача ожидает подтверждения автора
+                                {% elif item.status.slug == 'confirmation' %}
+                                    Выполненая задача подтверждена автором
+                                {% else %}
+                                    Поставленная задача ожидает принятия в работу
+                                {% endif %}
+                            </small>
                         </td>
                         <td class="text-center">{{ item.author|view_shortfio_user }} <br/><small>{{ item.DateTime_add }}</small></td>
                     </tr>

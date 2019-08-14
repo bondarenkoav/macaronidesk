@@ -66,6 +66,8 @@ def addget_task(request, id_item):
                 else:
                     if form.cleaned_data['confirmation'] == True:
                         new_task.status = status_task.objects.get(slug='confirmation')
+                    if form.cleaned_data['status'] == None:
+                        new_task.status = old_data.status
                 new_task.Update_user = request.user
             else:
                 new_task.Factory = get_cur_factory(request.user)

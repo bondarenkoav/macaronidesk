@@ -1,6 +1,5 @@
 {% load bootstrap4 %}
 
-
 <form action="{% url 'change_cur_factory' %}" method="post" class="form">{% csrf_token %}
     <div class="input-group">
         {% bootstrap_field form.cur_factory show_label=False form_group_class='change_factory_formgroup' field_class='change_factory_selectfield' size='medium' %}
@@ -9,3 +8,11 @@
         </div>
     </div>
 </form>
+
+{% comment %}
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Кнопка</button>
+  </div>
+</div>{% endcomment %}

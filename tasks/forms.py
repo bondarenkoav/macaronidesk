@@ -28,9 +28,10 @@ class form_add_task(ModelForm):
                 self.fields['high_importance'].widget.attrs['disabled'] = 'disabled'
                 self.fields['confirmation'].required = False
                 self.fields['confirmation'].widget.attrs['disabled'] = 'disabled'
-                self.fields['status'].queryset = status_task.objects.exclude(slug__in=['confirmation','control','canceled'])
+                self.fields['status'].queryset = status_task.objects.exclude(slug__in=['open','confirmation','control','canceled'])
             else:
                 if instance.status.slug == 'open' or instance.status.slug == 'work':
+                    self.fields['status'].required = False
                     self.fields['status'].queryset = status_task.objects.filter(slug__in=['canceled'])
                 elif instance.status.slug == 'control':
                     self.fields['status'].queryset = status_task.objects.filter(slug__in=['confirmation','canceled'])

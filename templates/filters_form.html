@@ -1,29 +1,12 @@
 {% load bootstrap4 %}
-
-<a href="" data-toggle="modal" data-target="#exampleModalCenter">
-    <i class="fa fa-filter fa-3x" aria-hidden="true" style="text-shadow: 1px 1px 2px black, 0 0 1em white;"
-       data-toggle="tooltip" data-placement="left" title="Фильтры">
-    </i>
-</a>
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <form action="" method="get">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Фильтры</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {% bootstrap_form form layout='horizontal' horizontal_label_class='col-md-4' horizontal_field_class='col-md-8' show_help=False  %}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="submit" class="btn btn-primary">Показать</button>
-                </div>
-            </div>
+<form action="" method="get">
+    <div class="input-group">
+        <div class="input-group-prepend" style="height: 38px;">
+            <span class="input-group-text">Фильтры</span>
         </div>
-    </form>
-</div>
+        {% bootstrap_form form layout='inline' show_help=False  %}
+        <div class="input-group-append" style="height: 38px;">
+            {% bootstrap_button "Показать" button_type="submit" button_class="btn btn-outline-secondary" %}
+        </div>
+    </div>
+</form>

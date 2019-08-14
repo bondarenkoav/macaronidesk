@@ -19,8 +19,7 @@ class area(MPTTModel):
     slug    = models.SlugField(u'Ключ категории')
     parent  = TreeForeignKey(u'self', blank=True, null=True, verbose_name="Родитель", related_name='child', db_index=True)
 
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
     class Meta:
         verbose_name = u'Участок/Отдел '
         verbose_name_plural = u'Структура подразделений '
@@ -36,8 +35,7 @@ class posts(models.Model):
     #     self.slug = slugify(self.name)
     #     super(posts, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
     class Meta:
         ordering = ['id']
         verbose_name = u'Должность '
@@ -127,8 +125,7 @@ class partner(models.Model): # поставщик/покупатель
     fullname = models.CharField(u'Полное наименование', max_length=300)
     inn = models.CharField(u'ИНН', max_length=15, blank=True)
 
-    def __str__(self):
-        return self.type.short_name + ' ' + self.shortname + ' (' + self.inn + ')'
+    def __str__(self): return self.type.short_name + ' ' + self.shortname + ' (' + self.inn + ')'
     class Meta:
         ordering = ['shortname']
         verbose_name = u'Контрагент '
@@ -139,8 +136,7 @@ class partner(models.Model): # поставщик/покупатель
 class cereal_crop(models.Model): # зерновые культуры
     name = models.CharField(u'Наименование', max_length=100)
 
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
     class Meta:
         verbose_name = u'Культура '
         verbose_name_plural = u'Зерновые культуры '
@@ -189,7 +185,7 @@ class machine_production(models.Model):
     name = models.CharField(u'Наименование', max_length=100)
     slug = models.SlugField()
 
-    def __str__(self):  return self.name
+    def __str__(self): return self.name
     class Meta:
         ordering = ['id']
         verbose_name = u'Станок '
@@ -211,8 +207,7 @@ class City(models.Model):
     Name    = models.CharField(u'Город',max_length=100)
     slug    = models.SlugField(u'алиас')
 
-    def __str__(self):
-        return self.Name
+    def __str__(self): return self.Name
     class Meta:
         ordering = ['Name']
         verbose_name = u'Город '
@@ -225,8 +220,7 @@ class Factory(models.Model):
     #slug    = models.SlugField(u'алиас', unique=True)
     Descript = models.TextField(u'Описание (специфика производства)', blank=True)
 
-    def __str__(self):
-        return self.Name
+    def __str__(self): return self.Name
     class Meta:
         verbose_name = u'Фабрика/завод '
         verbose_name_plural = u'Список производств '

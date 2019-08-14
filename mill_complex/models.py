@@ -50,12 +50,12 @@ class elevator_grain_intake(models.Model):
             ('m_egi_item_edit', u'УПЗ. Редактирование записи'),
         )
 
-# class elevatorgrainintake_filter(django_filters.FilterSet):
-#     Date_word = django_filters.DateRangeFilter(label=u'Дата записи')
-#
-#     class Meta:
-#         model = elevator_grain_intake
-#         fields = ['Provider', 'Date_word']
+class elevatorgrainintake_filter(django_filters.FilterSet):
+    Date_word = django_filters.DateRangeFilter(label=u'Дата записи')
+
+    class Meta:
+        model = elevator_grain_intake
+        fields = []
 
 
 class elevator_grain_waste_accounting(models.Model):
