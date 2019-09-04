@@ -30,3 +30,11 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+
+class GroupProfile(models.Model):
+    group = models.OneToOneField(Group, unique=True)
+    factory = models.ForeignKey(Factory, related_name='factory_group', verbose_name=u'Производство', null=True, blank=True)
+
+    def __str__(self):
+        return self.factory.Name+' : '+self.group.name

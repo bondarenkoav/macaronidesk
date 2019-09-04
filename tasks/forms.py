@@ -1,6 +1,8 @@
 from datetime import datetime
 from django import forms
+from django.contrib.auth.models import User, Group
 from django.forms import DateInput, TimeInput, TimeField, DateField, ModelForm, CharField
+from account.models import Profile, GroupProfile
 from reference_books.models import status_task, typenotification_task
 
 from tasks.models import user_task
@@ -44,6 +46,9 @@ class form_add_task(ModelForm):
             self.fields['status'].widget.attrs['disabled'] = 'disabled'
             self.fields['work_desc'].required = False
             self.fields['work_desc'].widget.attrs['disabled'] = 'disabled'
+
+        profile = Profile.objects.get(user=self.user)
+        self.fields['executors'].queryset = GroupProfile.objects.filter(factory__in=profile.factory.all())
 
         self.fields['read'].required = False
         self.fields['read'].widget.attrs['disabled'] = 'disabled'
