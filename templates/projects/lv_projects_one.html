@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}{{ title_small }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% if data_project %}{% url 'addget_projects' data_project.id %}{% else %}{% url 'addget_projects' %}{% endif %}" method="post" class="form">
+                    {% bootstrap_form_errors form %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Заголовок" label_for="title" %}
+                            </div>
+                            <div class="col-7">
+                                {% bootstrap_field form.title layout='inline' error_css_class='invalid-feedback' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Период" label_for="Date_limit" %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.date_start layout='inline' error_css_class='invalid-feedback' %}
+                            </div>
+                            <div class="col-2">
+                                {% bootstrap_field form.date_end layout='inline' error_css_class='invalid-feedback' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Описание задачи" label_for="description" %}
+                            </div>
+                            <div class="col-10">
+                                {% bootstrap_field form.description layout='inline' error_css_class='invalid-feedback' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Ответственный" label_for="executors" %}
+                            </div>
+                            <div class="col-10">
+                                {% bootstrap_field form.responsible layout='inline' error_css_class='invalid-feedback' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                {% bootstrap_label "Статус" label_for="status" %}
+                            </div>
+                            <div class="col-4">
+                                {% bootstrap_field form.status layout='inline' error_css_class='invalid-feedback' %}
+                            </div>
+                        </div>
+                    </div>
+                    {% buttons class="text-right" %}
+                        <a class="btn btn-warning" href="{% url 'getlist_projects' %}" role="button">Вернуться к списку</a>
+                        {% if perms.projects.project_item_edit %}
+                            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+                        {% endif %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

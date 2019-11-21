@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load bootstrap4 personal_tags %}
+
+{% block filters_form %}
+    {% include 'filters_form.html' with form=tasks_filter.form %}
+{% endblock %}
+
+{% block content_title %}Список задач{% endblock %}
+{% block content_area %}Задачи{% endblock %}
+{% block content_title_small %}
+    <a href="{% url 'addget_tasks' %}">Добавить запись</a>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Задача</th>
+                    <th scope="col">Группа ответственных</th>
+                    <th scope="col">Срок исполнения</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Поставил задачу</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in tasks %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'addget_tasks' item.id %}';">
+                        <th scope="row" class="text-center">{{ item.id }}</th>
+                        <td>{{ item.title }}<br>
+                            <small>{{ item.description|truncatechars:50 }}</small>
+                        </td>
+                        <td class="text-center">{{ item.executors }}</td>
+                        <td class="text-center">{{ item.Date_limit }}</td>
+                        <td class="text-center">
+                            {{ item.status }}&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-envelope{% if item.read == True %}-open{% endif %}-o" aria-hidden="true"></i><br/>
+                            <small>
+                                {% if item.status.slug == 'complete' %}
+                                    Задача выполнена исполнителем и требует подтверждения автором
+                                {% elif item.status.slug == 'work' %}
+                                    Задача принята исполнителем
+                                {% elif item.status.slug == 'canceled' %}
+                                    Задача отменена автором
+                                {% elif item.status.slug == 'control' %}
+                                    Выполненая задача ожидает подтверждения автора
+                                {% elif item.status.slug == 'confirmation' %}
+                                    Выполненая задача подтверждена автором
+                                {% else %}
+                                    Поставленная задача ожидает принятия в работу
+                                {% endif %}
+                            </small>
+                        </td>
+                        <td class="text-center">{{ item.author|view_shortfio_user }} <br/><small>{{ item.DateTime_add }}</small></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% include 'templatetags/pagination.html' with page_obj=tasks %}
+{% endblock %}

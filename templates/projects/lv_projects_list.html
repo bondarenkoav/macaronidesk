@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load bootstrap4 personal_tags %}
+
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_area %}{{ title_area }}{% endblock %}
+{% block content_title_small %}
+    <a href="{% url 'addget_projects' %}" class="btn btn-link" role="button" aria-disabled="true">Добавить</a>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-page">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th style="width: 5%;">#</th>
+                    <th style="width:95%;">Наименование проекта</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list %}
+                    <tr id="obj_{{ item.id }}" onclick="location.href = '{% url 'projects:addget_client' item.id %}';">
+                        <th scope="row" class="text-center">{{ item.id }}</th>
+                        <td>{{ item.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
