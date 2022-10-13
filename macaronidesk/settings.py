@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'a3w#qvsa_sxtwg6426h^o$3!h)v$irn_)-zuv7-(y3+11lv)6d'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,14 +79,6 @@ WSGI_APPLICATION = 'macaronidesk.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'macarondb',
-        'USER': 'request',
-        'PASSWORD': '123456',
-        'HOST': '192.168.41.233', # Set to empty string for localhost.
-        'PORT': '5432', # Set to empty string for default.
-    },
 }
 
 
